@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/cf', function(req, res, next) {
     var user_id = req.query.user_id;
-    var item = [{ name: "테스트", satisfaction: 30 }]
+    var item = [{ id: 1, name: "테스트1", satisfaction: 30 }, { id: 2, name: "테스트2", satisfaction: 10 }]
     res.send({
         item: item
     });
@@ -18,7 +18,7 @@ router.get('/cf', function(req, res, next) {
 
 router.get('/cbf', function(req, res, next) {
     var user_id = req.query.user_id;
-    var item = [{ name: "테스트", satisfaction: 70 }]
+    var item = [{ id: 1, name: "테스트1", satisfaction: 70 }, { id: 3, name: "테스트3", satisfaction: 60 }]
     res.send({
         item: item
     });
