@@ -58,23 +58,23 @@ dfProduct = dfProduct.append({
 ```[userid, [[Funding_ID1, Score1], [Funding_ID2, Score2],...]```
 
 ### Content Based Filtering
- - Considered Feature
-  -  name
-  -  makerName 
-  -  summary
-  -  category
-  -  totalAmount
-  -  totalSupporter
+- Considered Feature
+ - name
+ - makerName 
+ - summary
+ - category
+ - totalAmount
+ - totalSupporter
 
- - Preprocessing Feature
-  - makerName, summary, category
-   - Tokenizer
-   - Word2Vec
-   - CosineSimiliarity
+- Preprocessing Feature
+ - makerName, summary, category
+ - Tokenizer
+ - Word2Vec
+ - CosineSimiliarity
 
-  - rangeAmount, totalAmount, totalSupporter
-   - 0~8 range amount
-   - filter range amount  
+- rangeAmount, totalAmount, totalSupporter
+ - 0~8 range amount
+ - filter range amount  
 
 ```
 spark_df = spark_rdd.toDF()
