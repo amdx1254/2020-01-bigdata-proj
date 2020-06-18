@@ -3,8 +3,8 @@
 # DataAcquisition
 ## Crawling
 - Crawling Data:
-  - 1) Funding Data :  productId, name, category, makerName, summary, achievementRate, summary, totalAmount, totalSupporter, totalLike, rewardSatisfaction, makerSatisfaction, comments, campaignComments, detailUrl
-  - 2) User Data: userId, fundingList(fundingId)
+  1) Funding Data :  productId, name, category, makerName, summary, achievementRate, summary, totalAmount, totalSupporter, totalLike, rewardSatisfaction, makerSatisfaction, comments, campaignComments, detailUrl
+  2) User Data: userId, fundingList(fundingId)
 
 
 ```
