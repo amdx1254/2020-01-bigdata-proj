@@ -59,22 +59,22 @@ dfProduct = dfProduct.append({
 
 ### Content Based Filtering
 - Considered Feature
- - name
- - makerName 
- - summary
- - category
- - totalAmount
- - totalSupporter
+  - name
+  - makerName 
+  - summary
+  - category
+  - totalAmount
+  - totalSupporter
 
 - Preprocessing Feature
- - makerName, summary, category
- - Tokenizer
- - Word2Vec
- - CosineSimiliarity
+  - makerName, summary, category
+  - Tokenizer
+  - Word2Vec
+  - CosineSimiliarity
 
 - rangeAmount, totalAmount, totalSupporter
- - 0~8 range amount
- - filter range amount  
+  - 0~8 range amount
+  - filter range amount  
 
 ```
 spark_df = spark_rdd.toDF()
