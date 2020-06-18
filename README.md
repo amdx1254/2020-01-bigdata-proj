@@ -51,7 +51,11 @@ dfProduct = dfProduct.append({
 
 
 ## DataAnalysis
-
+### Collaborative Filtering
+- Using PySpark AST Module
+- Input : ```[[userid1, fundingid1, backedAmount1], [userid2, fundingid2, backedAmount2],...]```
+- Output : 
+```[userid, [[Funding_ID1, Score1], [Funding_ID2, Score2],...]```
 
 
 ## DataVisualization
