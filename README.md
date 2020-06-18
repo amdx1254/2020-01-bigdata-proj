@@ -1,7 +1,25 @@
 # 2020-01-group2
 
-# DataAcquisition
-## Crawling
+### Repository Structure
+  1. Crawling.py
+  2. Spark_CF.ipynb
+  3. Spark_CBF.ipynb
+  4. Web
+
+### Software Require
+  1. Jupyter notebook
+  2. Python
+
+
+### Algorithms implemented and evaluated
+  1. Collaborative Filtering
+  2. Content based Filtering
+
+
+# Implementation
+
+## DataAcquisition
+ ### Crawling
 - Crawling Data:
   1) Funding Data :  productId, name, category, makerName, summary, achievementRate, summary, totalAmount, totalSupporter, totalLike, rewardSatisfaction, makerSatisfaction, comments, campaignComments, detailUrl
   2) User Data: userId, fundingList(fundingId)
@@ -29,21 +47,14 @@ dfProduct = dfProduct.append({
 
 
 
-# DataPreprocessing
+## DataPreprocessing
 
 
-# DataAnalysis
-## Scala
-- PySpark Cosine Similarity UDF Optimization
-#### Build
-```sh
-$ cd scala
-$ sbt package
-```
-- Use ```--jar``` parameter to use in spark
+## DataAnalysis
 
 
-# DataVisualization
+
+## DataVisualization
 ### Tech
 - Language: JavaSctripts
 - Backend: Express
