@@ -67,7 +67,6 @@
                 cbfAreaY[6] += 1;
             }
         }
-        console.log(cbfAreaY);
         // areaChart Start
         var ctx = document.getElementById("myAmountChart");
         var myLineChart = new Chart(ctx, {
@@ -190,7 +189,6 @@
                 }
             }
         }
-        console.log(cbfAreaY);
         // areaChart Start
         var ctx = document.getElementById("myCategoryChart");
         var myLineChart = new Chart(ctx, {
@@ -303,13 +301,13 @@
 
         for (let idx in arrx) {
             for (let cfy of cflist) {
-                if (cfy.name == arrx[idx]) {
-                    cfAreaY[idx] = cfy.score;
+                if (cfy.id == arrx[idx]) {
+                    cfAreaY[idx] = (cfy.score * 100).toFixed(2);
                 }
             }
             for (let cbfy of cbflist) {
-                if (cbfy.name == arrx[idx]) {
-                    cbfAreaY[idx] = cbfy.score;
+                if (cbfy.id == arrx[idx]) {
+                    cbfAreaY[idx] = (cbfy.score * 100).toFixed(2);
                 }
             }
         }
@@ -419,7 +417,7 @@
     }
 
     $(document).on('click', '.search-btn', function(e) {
-        let user_id = $('#user-input').text();
+        let user_id = $('#user-input').val();
         $('.cf-item').empty();
         let cflist = [];
         let cbflist = [];
@@ -433,8 +431,9 @@
             success: function(data) {
                 for (let i of data.item) {
                     cflist.push(i);
-                    arrName.add(i.name);
+                    arrName.add(i.id);
                     arrCategory.add(i.category);
+                    let score = i.score * 100;
                     let at = '                          <div class="col-xl-3 col-md-6 mb-4">\
                     <div class="card border-left-info shadow h-100 py-2">\
                         <div class="card-body">\
@@ -444,11 +443,11 @@
                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">' + i.amount + '원</div>\
                                     <div class="row no-gutters align-items-center">\
                                         <div class="col-auto">\
-                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">' + i.score + '%</div>\
+                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">' + score.toFixed(2) + '%</div>\
                                         </div>\
                                         <div class="col">\
                                             <div class="progress progress-sm mr-2">\
-                                                <div class="progress-bar bg-info" role="progressbar" style="width: ' + i.score + '%" aria-valuenow="' + i.score + '" aria-valuemin="0" aria-valuemax="100"></div>\
+                                                <div class="progress-bar bg-info" role="progressbar" style="width: ' + score.toFixed(2) + '%" aria-valuenow="' + score.toFixed(2) + '" aria-valuemin="0" aria-valuemax="100"></div>\
                                             </div>\
                                         </div>\
                                     </div>\
@@ -474,8 +473,9 @@
             success: function(data) {
                 for (let i of data.item) {
                     cbflist.push(i);
-                    arrName.add(i.name);
+                    arrName.add(i.id);
                     arrCategory.add(i.category);
+                    let score = i.score * 100;
                     let at = '                          <div class="col-xl-3 col-md-6 mb-4">\
                     <div class="card border-left-info shadow h-100 py-2">\
                         <div class="card-body">\
@@ -485,11 +485,11 @@
                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">' + i.amount + '원</div>\
                                     <div class="row no-gutters align-items-center">\
                                         <div class="col-auto">\
-                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">' + i.score + '%</div>\
+                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">' + score.toFixed(2) + '%</div>\
                                         </div>\
                                         <div class="col">\
                                             <div class="progress progress-sm mr-2">\
-                                                <div class="progress-bar bg-info" role="progressbar" style="width: ' + i.score + '%" aria-valuenow="' + i.score + '" aria-valuemin="0" aria-valuemax="100"></div>\
+                                                <div class="progress-bar bg-info" role="progressbar" style="width: ' + score.toFixed(2) + '%" aria-valuenow="' + score.toFixed(2) + '" aria-valuemin="0" aria-valuemax="100"></div>\
                                             </div>\
                                         </div>\
                                     </div>\
@@ -506,6 +506,21 @@
                 }
             }
         });
+        let scoreChart = '<div class="chart-area">\
+                                <canvas id="myScoreChart"></canvas>\
+                            </div>'
+        $('#score-chart').empty();
+        $('#score-chart').append(scoreChart);
+        let categoryChart = '<div class="chart-area">\
+                                <canvas id="myCategoryChart"></canvas>\
+                            </div>'
+        $('#category-chart').empty();
+        $('#category-chart').append(categoryChart);
+        let amountChart = '<div class="chart-area">\
+                                <canvas id="myAmountChart"></canvas>\
+                            </div>'
+        $('#amount-chart').empty();
+        $('#amount-chart').append(amountChart);
         createScoreLineChart(Array.from(arrName), cflist, cbflist);
         createCategoryLineChart(Array.from(arrCategory), cflist, cbflist);
         createAmountLineChart(cflist, cbflist);
