@@ -68,13 +68,13 @@ dfProduct = dfProduct.append({
 
 - Preprocessing Feature
   - makerName, summary, category
-  - Tokenizer
-  - Word2Vec
-  - CosineSimiliarity
+    - Tokenizer
+    - Word2Vec
+    - CosineSimiliarity
 
-- rangeAmount, totalAmount, totalSupporter
-  - 0~8 range amount
-  - filter range amount  
+  - rangeAmount, totalAmount, totalSupporter
+    - 0~8 range amount
+    - filter range amount  
 
 ```
 spark_df = spark_rdd.toDF()
