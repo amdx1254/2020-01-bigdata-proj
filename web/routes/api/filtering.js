@@ -33,7 +33,7 @@ router.get('/cbf', async(req, res) => {
         let result = item.filter(function(i) {
             return i.user_id === Number(user_id);
         });
-        res.send({ item: result });
+        res.send({ item: result.reverse() });
 
     });
 });
