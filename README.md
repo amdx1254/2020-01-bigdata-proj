@@ -1,6 +1,32 @@
 # 2020-01-group2
 
 # DataAcquisition
+## Crawling
+- Crawling Data:
+  1) Funding Data :  productId, name, category, makerName, summary, achievementRate, summary, totalAmount, totalSupporter, totalLike, rewardSatisfaction, makerSatisfaction, comments, campaignComments, detailUrl
+  2) User Data: userId, fundingList(fundingId)
+
+
+```
+dfProduct = dfProduct.append({
+                'id': id,
+                'name': name,
+                'category': category,
+                'makerName': makerName,
+                'summary' : summary,
+                'achievementRate': achievementRate,
+                'totalAmount': totalAmount,
+                'totalSupporter': int(totalSupporter),
+                'totalLike': int(totalLike),
+                'rewardSatisfaction': rewardSatisfaction, 
+                'makerSatisfaction': makerSatisfaction,
+                'comments': comments,
+                'campaigncomments': campaigncomments, # 응원댓글 
+                'participants': participants, # 참여자
+                'detailUrl': detailUrl,
+                },ignore_index=True)
+```
+
 
 
 # DataPreprocessing
