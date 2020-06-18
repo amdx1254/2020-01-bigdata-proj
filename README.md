@@ -33,7 +33,14 @@ dfProduct = dfProduct.append({
 
 
 # DataAnalysis
-
+## Scala
+- PySpark Cosine Similarity UDF Optimization
+#### Build
+```sh
+$ cd scala
+$ sbt package
+```
+- Use ```--jar``` parameter to use in spark
 
 
 # DataVisualization
