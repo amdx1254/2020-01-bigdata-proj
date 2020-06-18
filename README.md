@@ -57,6 +57,35 @@ dfProduct = dfProduct.append({
 - Output : 
 ```[userid, [[Funding_ID1, Score1], [Funding_ID2, Score2],...]```
 
+### Content Based Filtering
+ - Considered Feature
+  -  name
+  -  makerName 
+  -  summary
+  -  category
+  -  totalAmount
+  -  totalSupporter
+
+ - Preprocessing Feature
+  - makerName, summary, category
+   - Tokenizer
+   - Word2Vec
+   - CosineSimiliarity
+
+  - rangeAmount, totalAmount, totalSupporter
+   - 0~8 range amount
+   - filter range amount  
+
+```
+spark_df = spark_rdd.toDF()
+tokenizer = Tokenizer(inputCol='soop', outputCol='keywords')
+wordData = tokenizer.transform(spark_df)
+word2Vec = Word2Vec(vectorSize=100, minCount=5, inputCol='keywords', outputCol='word_vec', seed=123)
+word2VecData = word2Vec.fit(wordData)
+word2VecData = word2VecData.transform(wordData)
+word2VecData_rdd = word2VecData.rdd
+```
+
 
 ## DataVisualization
 ### Tech
