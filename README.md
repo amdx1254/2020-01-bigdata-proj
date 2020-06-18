@@ -1,5 +1,14 @@
 # 2020-01-group2
 
+# DataAcquisition
+
+
+# DataPreprocessing
+
+
+# DataAnalysis
+
+
 
 # DataVisualization
 ### Tech
