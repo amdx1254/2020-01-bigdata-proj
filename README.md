@@ -86,7 +86,14 @@ word2VecData = word2Vec.fit(wordData)
 word2VecData = word2VecData.transform(wordData)
 word2VecData_rdd = word2VecData.rdd
 ```
-
+### Scala
+- Optimizing PySpark CosineSimilarity UDF
+- Build
+```sh
+$ cd scala
+$ sbt package
+```
+- add compiled ```-jar``` parameter to spark 
 
 ## DataVisualization
 ### Tech
