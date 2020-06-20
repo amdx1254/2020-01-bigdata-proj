@@ -37,12 +37,17 @@
 - Output : 
 ```[userid, [[Funding_ID1, Score1], [Funding_ID2, Score2],...]```
 - Considerted Feature : ```[name, makerName, summary, category, totalAmount, totalSupporter]```
-- Preprocessing Feature: ```[soop: makerName * x + summary * y + ConsineSimiliarity * z] ```, ```[avgAmount: totalAmount / totalSupporter]```
+- Preprocessing Feature: ```[soop: makerName * x + summary * y + category * z] ```, ```[avgAmount: totalAmount / totalSupporter]```
+
+앞선 soop column에 해당하는 x, y, z의 경우는 각 column에 대한 비율을 조정하여 추천 알고리즘의 output을 달리할 수 있다. 
+
 - Implementation
   - soop
     - Tokenizer
     - Word2Vec
     - CosineSimiliarity
+    
+![코사인 유사도](https://user-images.githubusercontent.com/30233659/85210674-f969d280-b37c-11ea-8c8a-baa0cffcb7a4.png)
 
   - avgAmount
     - 0~8 range amount
