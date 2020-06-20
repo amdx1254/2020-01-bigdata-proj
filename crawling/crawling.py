@@ -11,10 +11,15 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 from matplotlib import rc
 
+import sys
+
 headers = {'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'}
-user_data = {'userName' : 'amdx1254@naver.com', 'password': '1q2w3e4r!'}
 count = 1
 
+data_loc = sys.argv[1]
+type_list = sys.argv[2]
+start = int(sys.argv[3])
+end = int(sys.argv[4]) + 1
 # 함수이름: product_detail
 # 동작: 디테일한 상품 정보 페이지에 접속해서 상품정보요약, 좋아요, 서포터 수를 크롤링해온다.
 # 크롤러동작사이트: https://www.wadiz.kr/web/campaign/detail/{product Id}
@@ -88,7 +93,7 @@ def product_comment(id):
         time.sleep(random.uniform(1,3))
         for productComment in productComments:
             commentRating = productComment['averageScore']
-            comment = productComment['comment']
+            comment = productComment['comment'].replace('\n','').replace('\t','')
             comments.append([commentRating, comment])
         comment_page = comment_page + 1
         comment_url = f"https://www.wadiz.kr/web/reward/api/satisfactions?campaignId={id}&orderProperty=REGISTERED&direction=desc&page={comment_page}&size=5"
@@ -114,7 +119,7 @@ def product_comment2(id):
         time.sleep(random.uniform(1,3))
         for productComment in productComments:
             boardId = productComment['boardId']
-            comment = productComment['body']
+            comment = productComment['body'].replace('\n','').replace('\t','')
             comments.append([boardId, comment])
         comment_page = comment_page + 1
         comment_url = f"https://www.wadiz.kr/web/reward/api/comments/campaigns/{id}?page={comment_page}&size=15&commentGroupType=CAMPAIGN"
@@ -166,67 +171,31 @@ def get_participants(id):
         
     return participant_list
 
-
-# 함수이름: get_user_fundinglist
-# 동작: 유저의 펀딩 리스트를 가져온다.. 
-# 크롤러동작사이트: https://www.wadiz.kr/web/wmypage/myprofile/fundinglist/{userid}
-# 입력값: userid
-# 출력값: [켐페인id, 켐페인이름, 카테고리]
-def get_user_fundinglist(userid):
-    time.sleep(random.uniform(1,3))
-    list_url = f"https://www.wadiz.kr/web/wmypage/myprofile/fundinglist/{userid}"
-    funding_list = []
-    res = requests.get(list_url, headers=headers).text
-    soup = bs(res, 'html.parser')
-    with requests.Session() as s:
-        login_headers = {'authority':'www.wadiz.kr', 'method': 'POST', 'path': '/web/waccount/ajaxLoginProcess'
-                   ,'scheme': 'https', 'accpet': 'application/json, text/javascript, */*; q=0.01',
-                   'accept-encoding': 'gzip, deflate, br', 'accept-language': 'ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7',
-                   'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36'}
-        
-        s.post("https://www.wadiz.kr/web/waccount/ajaxLoginProcess", headers=login_headers, data=user_data)
-        res = s.get(list_url).text
-        soup = bs(res, 'html.parser')
-        card_list = soup.find_all('li', class_='all')
-    for card in card_list:
-        campaign_id = card.attrs['data-campaignid']
-        name = card.find('h4').text
-        category = card.find('span', class_='category1').text
-        funding_list.append([campaign_id, name, category])
-    return funding_list
-
-
 # 함수이름: save_user_to_file
-# 동작: 유저의 펀딩 리스트를 파일로 저장한다.(중복제거) 
-# 입력값: userid, funding_list
-# 출력값: 파일 수정 
-def save_user_to_file(userid, funding_list):
-    try:
-        dfUser = pd.read_csv("users1.csv", names=['userid', 'funding_list'], header=None)
-    except:
-        dfUser = pd.DataFrame(columns=['userid', 'funding_list'])
+# 동작: 사용자의 펀딩 정보를 저장한다.
+# 입력값: userid, campaignid, name, category, backedAmount
+# 출력값: 파일 수정
+def save_user_to_file(userid, campaignid, name, category, backedAmount):
+    dfUser = pd.DataFrame(columns=['user_id', 'funding_id', 'funding_name', 'category', 'backedAmount'])
+    dfUser = dfUser.append({'user_id': userid, 'funding_id': campaignid, 'funding_name': name, 'category': category, 'backedAmount': backedAmount}, ignore_index=True)
+    
+    dfUser = dfUser.set_index('user_id')
+    dfUser.to_csv(data_loc + '/users.csv', mode='a', header=False)
 
-    dfUser = dfUser.set_index('userid')
-
-    if userid in dfUser.index:
-        if len(dfUser.loc[userid]['funding_list']) != len(funding_list):
-            dfUser.loc[userid]['funding_list'] = funding_list
-        dfUser.to_csv("users1.csv", header=None)
-    else:
-        dfUser2 = pd.DataFrame({'userid':[userid], 'funding_list': [funding_list]}, columns=['userid', 'funding_list'])
-        dfUser2 = dfUser2.set_index('userid')
-        resultdf = pd.concat([dfUser, dfUser2])
-        resultdf.to_csv("users1.csv", header=None)
-        
 # endYn = Y or ALL , order = recommend or recent or support or amount
 endYn = 'Y'
-order = 'recommend'
+if type_list == '0':
+    order = 'recommend'
+elif type_list == '1':
+    order = 'popular'
+else:
+    order = 'recent'
+    
 startNum  = 0
 
-os.makedirs('result', exist_ok=True)
 count = 1
-for i in range(0, 100):
-    time.sleep(random.uniform(1,3))
+for i in range(start, end):
+    time.sleep(random.uniform(0,1))
     finish_crawling_count = 48*i
     save_crawling_count = 48*(i+1)
     startNum = 48*i
@@ -248,62 +217,69 @@ for i in range(0, 100):
    # count = finish_crawling_count
     for product in products:
         dfProduct = pd.DataFrame(columns=['id', 'name', 'category', 'makerName', 'summary', 'achievementRate', 
-                               'totalAmount', 'totalSupporter', 'totalLike', 'rewardSatisfaction', 
-                               'makerSatisfaction','detailUrl'])
+                                   'totalAmount', 'totalSupporter', 'totalLike', 'rewardSatisfaction', 'makerSatisfaction','detailUrl','campaigncomments', 'comments'])
+
         time.sleep(random.uniform(1,3))
-        if True:
-            detailUrl = "https://www.wadiz.kr/web/campaign/detail/" + str(product['campaignId'])
-            id = product['campaignId']
-            
-            name = product['title']
-            category = product['custValueCodeNm']
-            makerName = product['nickName']
-            achievementRate = product['achievementRate']
-            totalAmount = product['totalBackedAmount']
-            # 상품 상세정보
-            summary, totalSupporter, totalLike = product_detail(id, detailUrl)
-            # 상품 댓글 가져오기
-            rewardSatisfaction, makerSatisfaction, comments = product_comment(id)
-            
-            campaigncomments = []
-            # 응원댓글은 내용이 많아서 주석처리, 필요할경우만 사용 
-            campaigncomments = product_comment2(id)
 
-            participants = get_participants(id)
+        detailUrl = "https://www.wadiz.kr/web/campaign/detail/" + str(product['campaignId'])
+        id = product['campaignId']
+            
+        name = product['title']
+        category = product['custValueCodeNm']
+        makerName = product['nickName']
+        achievementRate = product['achievementRate']
+        totalAmount = product['totalBackedAmount']
+        # 상품 상세정보
+        summary, totalSupporter, totalLike = product_detail(id, detailUrl)
+        # 상품 댓글 가져오기
+        rewardSatisfaction, makerSatisfaction, comments = product_comment(id)
+           
+        campaigncomments = []
+        # 응원댓글은 내용이 많아서 주석처리, 필요할경우만 사용 
+        campaigncomments = product_comment2(id)
+        participants = get_participants(id)
 
-            for participant in participants:
-                funding_list = get_user_fundinglist(participant[0])
-                save_user_to_file(participant[0], funding_list)
+        for participant in participants:
+            #funding_list = get_user_fundinglist(participant[0])
+            save_user_to_file(participant[0], id, name, category, participant[2])
             
-                
-            dfProduct = dfProduct.append({
-                'id': id,
-                'name': name,
-                'category': category,
-                'makerName': makerName,
-                'summary' : summary,
-                'achievementRate': achievementRate,
-                'totalAmount': totalAmount,
-                'totalSupporter': int(totalSupporter),
-                'totalLike': int(totalLike),
-                'rewardSatisfaction': rewardSatisfaction, 
-                'makerSatisfaction': makerSatisfaction,
-                'comments': comments,
-                'campaigncomments': campaigncomments, # 응원댓글 
-                'participants': participants, # 참여자
-                'detailUrl': detailUrl,
-                },ignore_index=True)
-            
+        summary = summary.replace('\n','').replace('\t','')
+        dfProduct = dfProduct.append({
+            'id': id,
+            'name': name,
+            'category': category,
+            'makerName': makerName,
+            'summary' : summary,
+            'achievementRate': achievementRate,
+            'totalAmount': totalAmount,
+            'totalSupporter': int(totalSupporter),
+            'totalLike': int(totalLike),
+            'rewardSatisfaction': rewardSatisfaction, 
+            'makerSatisfaction': makerSatisfaction,
+            'comments': comments,
+            'campaigncomments': campaigncomments, # 응원댓글 
+            'detailUrl': detailUrl,
+            },ignore_index=True)
+        dfProduct = dfProduct.set_index('id')
         if comments != None:
             print(str(count) + ": " + name + ",  len_satiscomment: " + str(len(comments)) + ", len_campaigncomment: " + str(len(campaigncomments)))
         else:
             print(str(count) + ": " + name + ",  len_satiscomment: " + str(len(campaigncomments)))
             
         # 하나씩 csv파일로 저장.
-        dfProduct.to_csv('wadiz0-100.csv', mode='a', header=False)
+        dfProduct.to_csv(data_loc + '/wadiz.csv', mode='a', header=False)
         count = count + 1
-    
-        
 
-result = pd.read_csv('wadiz.csv')
-print(result)
+
+#users, wadiz funding list  중복제거 
+dfUser = pd.read_csv(data_loc + "/users.csv", names=['user_id', 'funding_id', 'funding_name', 'category', 'backedAmount'])
+dfUser = dfUser.drop_duplicates(['user_id', 'funding_id', 'funding_name', 'category', 'backedAmount'], keep='last')
+dfUser = dfUser.set_index("user_id")
+dfUser.to_csv(data_loc + '/users.csv', header=False)
+
+dfProduct = pd.read_csv(data_loc + "/wadiz.csv", names=['id', 'name', 'category', 'makerName', 'summary', 'achievementRate', 
+                                   'totalAmount', 'totalSupporter', 'totalLike', 'rewardSatisfaction', 'makerSatisfaction','detailUrl','campaigncomments', 'comments'])
+dfProduct = dfProduct.drop_duplicates(['id'], keep='last')
+dfProduct = dfProduct.set_index("id")
+dfProduct.to_csv(data_loc + '/wadiz.csv', header=False)
+
