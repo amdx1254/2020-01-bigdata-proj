@@ -81,6 +81,9 @@ $ sbt package
  - Category Chart: X축 결과 아이템들의 카테고리, Y축 카테고리별 Count
  - Amount Chart: X축 가격의 범위, Y축 가격 범위 별 Count
 
+### data
+ - 결과 데이터는 2GB가 넘어가기 때문에 testData로 구성
+
 # Install
 
 ```sh
@@ -92,3 +95,6 @@ $ npm start
 # Result
 ![test1-1](./img/test1-1.PNG)
 ![test1-2](./img/test1-2.PNG)
+ - ScoreChart를 보면 두 알고리즘이 추천하는 아이템은 완전히 다르게 나타난다는 것을 알 수 있다.
+ - CategoryChart를 보면 데이터가 많은 테스트 유저이여서 비슷한 결과가 나타난다는 것을 알 수 있다.
+ - AmoutChart를 보면 CBF의 경우 가격의 영향을 받아서 그래프가 형성되지만 CF의 경우 관련이 없는 결과가 나타난다는 것을 알 수 있다.
