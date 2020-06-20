@@ -90,5 +90,5 @@ $ npm start
 ```
 
 # Result
-![test1-1](./img/test1-1.png)
-![test1-2](./img/test1-2.png)
+![test1-1](./img/test1-1.PNG)
+![test1-2](./img/test1-2.PNG)
