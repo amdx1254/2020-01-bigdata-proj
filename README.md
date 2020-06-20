@@ -37,11 +37,7 @@
 - Output : 
 ```[userid, [[Funding_ID1, Score1], [Funding_ID2, Score2],...]```
 - Considerted Feature : ```[name, makerName, summary, category, totalAmount, totalSupporter]```
-- Preprocessing Feature: 
-
-```[soop: makerName * x + summary * y + ConsineSimiliarity * z] ```
-
-```[avgAmount: totalAmount / totalSupporter]```
+- Preprocessing Feature: ```[soop: makerName * x + summary * y + ConsineSimiliarity * z] ```, ```[avgAmount: totalAmount / totalSupporter]```
 - Implementation
   - soop
     - Tokenizer
