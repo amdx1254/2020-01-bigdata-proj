@@ -10,7 +10,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/cf', async(req, res) => {
     let user_id = req.query.user_id;
-    fs.readFile(__dirname + '/../../public/data/users_CF.json', 'utf8', (error, data) => {
+    fs.readFile(__dirname + '/../../public/data/users_CF_test.json', 'utf8', (error, data) => {
         if (error) return console.log(error);
 
         let jsonData = JSON.parse(data);
@@ -25,7 +25,7 @@ router.get('/cf', async(req, res) => {
 
 router.get('/cbf', async(req, res) => {
     let user_id = req.query.user_id;
-    fs.readFile(__dirname + '/../../public/data/users_CBF.json', 'utf8', (error, data) => {
+    fs.readFile(__dirname + '/../../public/data/users_CBF_test.json', 'utf8', (error, data) => {
         if (error) return console.log(error);
 
         let jsonData = JSON.parse(data);
