@@ -13,7 +13,7 @@
 # Implementation
 
 
-# DataAcquisition
+## DataAcquisition
  ### Crawling
 1. 크라우드 펀딩 상품 정보 (https://www.wadiz.kr/web/main)
 - 상품 아이디, 상품 이름, 카테고리, 메이커, 요약, 달성률, 전체 펀딩 금액, 전체 서포터수,전체 좋아요 수, 리워드 만족도, 메이커 만족도 , 댓글, 캠페인 댓글
