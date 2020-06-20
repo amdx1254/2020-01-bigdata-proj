@@ -18,31 +18,11 @@
   1. 크라우드 펀딩 상품 정보 (https://www.wadiz.kr/web/main)
 - 상품 아이디, 상품 이름, 카테고리, 메이커, 요약, 달성률, 전체 펀딩 금액, 전체 서포터수,전체 좋아요 수, 리워드 만족도, 메이커 만족도 , 댓글, 캠페인 댓글
 
-```
-dfProduct = dfProduct.append({
-                'id': id,
-                'name': name,
-                'category': category,
-                'makerName': makerName,
-                'summary' : summary,
-                'achievementRate': achievementRate,
-                'totalAmount': totalAmount,
-                'totalSupporter': int(totalSupporter),
-                'totalLike': int(totalLike),
-                'rewardSatisfaction': rewardSatisfaction, 
-                'makerSatisfaction': makerSatisfaction,
-                'comments': comments,
-                'campaigncomments': campaigncomments, # 응원댓글 
-                'participants': participants, # 참여자
-                'detailUrl': detailUrl,
-                },ignore_index=True)
-```
 
  2. 유저 상품 정보 ( https://www.wadiz.kr/web/wmypage/myprofile/fundinglist/userId)
 - 유저 아이디([유저아이디, 닉네임, 펀딩가격]), 유저 펀딩 리스트([캠페인 아이디, 이름 , 카테고리]
-```
-pd.DataFrame({'userid':[userid], 'funding_list': [funding_list]}, columns=['userid', 'funding_list'])
-```
+
+
 
 
 ## DataPreprocessing
