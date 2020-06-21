@@ -50,7 +50,7 @@ $ hadoop dfs -put {Raw데이터위치}/wadiz.csv
 $ cd scala
 $ sbt package
 ```
-- jar 파일 생성됨
+- target directory내에 jar 파일 생성
 
 ### Collaborative Filtering
 - Using PySpark AST Module
