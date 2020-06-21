@@ -1,0 +1,7 @@
+pyspark
+findspark
+matplotlib
+pandas
+numpy
+bs4
+
