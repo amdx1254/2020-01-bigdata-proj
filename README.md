@@ -53,6 +53,7 @@ $ sbt package
 - target directory내에 jar 파일 생성
 
 ### Collaborative Filtering
+- 모든 사람의 구매 내역 데이터를 분석하여 한 사람이 특정 상품을 구매하였으면 그 상품을 구매한 다른사람에게 그 사람이 구매했던 상품을 추천시켜주는 알고리즘이다. 
 - Using PySpark AST Module
 - Usage :
 ```sh
@@ -66,6 +67,7 @@ $ spark-submit --driver-memory 8g --executor-memory 8g --master yarn analysis/sp
 - 결과 데이터는 2GB가 넘어가고 분석 시간이 오래 걸리기 때문에 testData로 구성
 
 ### Content Based Filtering
+- Tokenizer를 이용해 단어를 토큰화 시키고 이것을 벡터공간에 놓아 CosineSimilarity를 통해 두 상품간의 유사도를 계산하여 사용자에게 상품을 추천해준다.
 - Using Tokenizer, Word2Vec, CosineSimiliarity, Range Amount
 - Usage :
 ```sh
