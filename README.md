@@ -15,12 +15,12 @@
 
 ## DataAcquisition
  ### Crawling
-1. 크라우드 펀딩 상품 정보 (https://www.wadiz.kr/web/main)
+1. 크라우드 펀딩 상품 정보 (https://www.wadiz.kr/web/main) [Data (153MB)](https://drive.google.com/file/d/1N4Fz2FsgeyE8Bi-EvBhXZ9YunGVoYy5a/view?usp=sharing)
 - 상품 아이디, 상품 이름, 카테고리, 메이커, 요약, 달성률, 전체 펀딩 금액, 전체 서포터수,전체 좋아요 수, 리워드 만족도, 메이커 만족도 , 댓글, 캠페인 댓글
 <img width="900" alt="스크린샷 2020-06-21 오전 12 46 28" src="https://user-images.githubusercontent.com/30233659/85206019-0923ef80-b35a-11ea-8e2e-d73f83e1a931.png">
 
 
-2. 유저 상품 정보 ( https://www.wadiz.kr/web/wmypage/myprofile/fundinglist/userId)
+2. 유저 상품 정보 ( https://www.wadiz.kr/web/wmypage/myprofile/fundinglist/userId) [Data (350MB)](https://drive.google.com/file/d/1KADxby-hK6zBZOEgYEFbZfIKT4uBcNYx/view?usp=sharing)
 - 유저 아이디([유저아이디, 닉네임, 펀딩가격]), 유저 펀딩 리스트([캠페인 아이디, 이름 , 카테고리]
 ![image](https://user-images.githubusercontent.com/30233659/85206001-fa3d3d00-b359-11ea-85ae-e657f5393022.png)
 
