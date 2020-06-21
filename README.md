@@ -61,9 +61,10 @@ $ export PYSPARK_PYTHON={PATH_TO_PYTHON3}
 $ spark-submit --driver-memory 8g --executor-memory 8g --master yarn analysis/spark_CF.py
 ```
 - Input : ```[[userid1, fundingid1, backedAmount1], [userid2, fundingid2, backedAmount2],...]```
+- bakedAmount는 금액에 따라 0.0 ~ 5.0으로 점수 수치화
 - Output : users_CF_test.json 
 ``` [userid, funding_id, funding_name, category, amount, score]```
-- ```web/public/data/users_CF_test.json``` 로 이동시켜야함.
+- Visualization을 위해 ```web/public/data/users_CF_test.json``` 로 이동시켜야함.
 - 결과 데이터는 2GB가 넘어가고 분석 시간이 오래 걸리기 때문에 testData로 구성
 
 ### Content Based Filtering
@@ -77,7 +78,7 @@ $ spark-submit --jars {CosineSimilarity UDF Jar파일 위치} --driver-memory 8g
 - Input : ```[[userid1, fundingid1], [userid2, fundingid2],...]```
 - Output : users_CBF_test.json 
 ``` [userid, funding_id, funding_name, category, amount, score]```
-- ```web/public/data/users_CBF_test.json``` 로 이동시켜야함.
+- Visualization을 위해 ```web/public/data/users_CBF_test.json``` 로 이동시켜야함.
 - 결과 데이터는 2GB가 넘어가고 분석 시간이 오래 걸리기 때문에 testData로 구성
 - Considerted Feature : ```[name, makerName, summary, category, totalAmount, totalSupporter]```
 - Preprocessing Feature: ```[soop: makerName * x + summary * y + category * z] ```, ```[avgAmount: totalAmount / totalSupporter]```
