@@ -21,21 +21,52 @@
 
 
 2. 유저 상품 정보 ( https://www.wadiz.kr/web/wmypage/myprofile/fundinglist/userId) [Data (350MB)](https://drive.google.com/file/d/1KADxby-hK6zBZOEgYEFbZfIKT4uBcNYx/view?usp=sharing)
-- 유저 아이디([유저아이디, 닉네임, 펀딩가격]), 유저 펀딩 리스트([캠페인 아이디, 이름 , 카테고리]
+- 유저아이디, 상품 아이디, 상품 이름, 카테고리, 펀딩 금액
 ![image](https://user-images.githubusercontent.com/30233659/85206001-fa3d3d00-b359-11ea-85ae-e657f5393022.png)
 
+3. crawling/crawling.py
+```sh
+$ python3 crawling/crawling.py {Raw 데이터 위치} {타입 (0:추천, 1:인기, 2:최신)} {시작페이지} {끝페이지}
+$ hadoop dfs -put {Raw데이터위치}/users.csv
+$ hadoop dfs -put {Raw데이터위치}/wadiz.csv
+```
+
 ## DataAnalysis
+
+### Scala
+- Optimizing PySpark CosineSimilarity UDF
+- Build
+```sh
+$ cd scala
+$ sbt package
+```
+- jar 파일 생성됨
+
 ### Collaborative Filtering
 - Using PySpark AST Module
+- Usage :
+```sh
+$ export PYSPARK_PYTHON={PATH_TO_PYTHON3}
+$ spark-submit --driver-memory 8g --executor-memory 8g --master yarn analysis/spark_CF.py
+```
 - Input : ```[[userid1, fundingid1, backedAmount1], [userid2, fundingid2, backedAmount2],...]```
-- Output : 
-```[userid, [[Funding_ID1, Score1], [Funding_ID2, Score2],...]```
+- Output : users_CF_test.json 
+``` [userid, funding_id, funding_name, category, amount, score]```
+- ```web/public/data/users_CF_test.json``` 로 이동시켜야함.
+- 결과 데이터는 2GB가 넘어가고 분석 시간이 오래 걸리기 때문에 testData로 구성
 
 ### Content Based Filtering
 - Using Tokenizer, Word2Vec, CosineSimiliarity, Range Amount
+- Usage :
+```sh
+$ export PYSPARK_PYTHON={PATH_TO_PYTHON3}
+$ spark-submit --jars {CosineSimilarity UDF Jar파일 위치} --driver-memory 8g --executor-memory 8g --master yarn analysis/spark_CBF.py
+```
 - Input : ```[[userid1, fundingid1], [userid2, fundingid2],...]```
-- Output : 
-```[userid, [[Funding_ID1, Score1], [Funding_ID2, Score2],...]```
+- Output : users_CBF_test.json 
+``` [userid, funding_id, funding_name, category, amount, score]```
+- ```web/public/data/users_CBF_test.json``` 로 이동시켜야함.
+- 결과 데이터는 2GB가 넘어가고 분석 시간이 오래 걸리기 때문에 testData로 구성
 - Considerted Feature : ```[name, makerName, summary, category, totalAmount, totalSupporter]```
 - Preprocessing Feature: ```[soop: makerName * x + summary * y + category * z] ```, ```[avgAmount: totalAmount / totalSupporter]```
 
@@ -52,15 +83,6 @@
   - avgAmount
     - 0~8 range amount
     - filter range amount  
-
-### Scala
-- Optimizing PySpark CosineSimilarity UDF
-- Build
-```sh
-$ cd scala
-$ sbt package
-```
-- add compiled ```-jar``` parameter to spark 
 
 ## DataVisualization
 ### Tech
