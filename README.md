@@ -2,13 +2,23 @@
 
 ### Software Require
   1. Jupyter notebook
-  2. Python
+  2. Python 3.5.6
+  3. hadoop 2.7.6
+  4. spark 2.2.2
 
 
 ### Algorithms implemented and evaluated
   1. Collaborative Filtering
   2. Content based Filtering
 
+### Installing
+```sh
+$ pip install -r requirements.txt
+$ echo "deb https://dl.bintray.com/sbt/debian /" | sudo tee -a /etc/apt/sources.list.d/sbt.list
+$ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823
+$ sudo apt-get update
+$ sudo apt-get install sbt npm
+```
 
 # Implementation
 
